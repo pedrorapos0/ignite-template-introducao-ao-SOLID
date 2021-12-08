@@ -1,0 +1,200 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Atlas",
+    "description": "This is an API Atlas",
+    "version": "1.0.0",
+    "contact": {
+      "email": "pedroraposoneto@fundepes.br"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": ["users"],
+        "summary": "Create a user",
+        "description": "Create a new user.",
+        "requestBody": {
+          "description": "Required fields to create a user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "email": {
+                    "type": "string"
+                  }
+                },
+                "example": {
+                  "name": "John Due",
+                  "email": "john.due@mail.com"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "user created"
+          },
+
+          "400": {
+            "description": "error"
+          }
+        }
+      },
+      "get": {
+        "tags": ["users"],
+        "summary": "Return all users",
+        "description": "List all created users.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "head",
+            "description": "One existing user id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "admin": {
+                        "type": "boolean"
+                      },
+                      "id": {
+                        "type": "string",
+                        "format": "uuid"
+                      },
+                      "created_at": {
+                        "type": "string",
+                        "format": "date"
+                      },
+                      "updated_at": {
+                        "type": "string",
+                        "format": "date"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "400": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/users/{user_id}": {
+      "get": {
+        "tags": ["users"],
+        "summary": "Returns a specific user",
+        "description": "Show profile user.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "One existing user id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucess",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "admin": {
+                      "type": "boolean"
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date"
+                    }
+                  }
+                }
+              }
+            }
+          },
+
+          "400": {
+            "description": "error"
+          }
+        }
+      }
+    },
+    "/users/{user_id}/admin": {
+      "patch": {
+        "tags": ["users"],
+        "summary": "Turn an admin user",
+        "description": "Turn admin profile user.",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "One existing user id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "style": "simple"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sucess"
+          },
+
+          "404": {
+            "description": "error"
+          }
+        }
+      }
+    }
+  }
+}
